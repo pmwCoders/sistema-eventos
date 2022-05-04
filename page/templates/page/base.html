@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'page/main.css' %}">
+
+    <!-- Google Material Design CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- JQuery CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+
+    <!-- JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    {% if title %}
+        <title>UniCatólica - {{ title }}</title>
+    {% else %}
+        <title>UniCatólica</title>
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+          <div class="container">
+            {% if user.is_authenticated and user.is_staff %}
+              <a class="navbar-brand mr-4" href="{% url 'page-home' %}">
+                {% load static %}
+              <img src="{% static 'page/logomarca.png' %}" alt="My image"> 
+                <b>| Admin</b>
+              </a>
+            {% else %}
+              <a class="navbar-brand mr-4" href="{% url 'page-home' %}">
+                {% load static %}
+              <img src="{% static 'page/logomarca.png' %}" alt="My image">
+              </a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                {% if user.is_authenticated and user.is_staff %}
+                  <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="material-icons">space_dashboard</span> Gerenciar</a>
+                    <div class="dropdown-menu border-0 bg-steel">
+                      <a class="dropdown-item" href=""><span class="material-icons">source</span> Eventos</a>
+                      <a class="dropdown-item" href=""><span class="material-icons">person</span> Estudantes</a>
+                      <a class="dropdown-item" href=""><span class="material-icons">face</span> Palestrantes</a>
+                    </div>
+                  </div>
+              {% endif %}
+              {% if user.is_authenticated and user.tipo == "Coordenador" %}
+                  <a class="nav-item nav-link" href=""><span class="material-icons">book</span> Disciplinas</a>
+                  <a class="nav-item nav-link" href=""><span class="material-icons">assignment</span> Aulas</a>
+                  <a class="nav-item nav-link" href=""><span class="material-icons">person</span> Estudantes</a>
+                  <a class="nav-item nav-link" href=""><span class="material-icons">face</span> Professores</a>
+              {% endif %}
+              </div>
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                  <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="material-icons">account_circle</span> {{ user.first_name }} {{ user.last_name }}</a>
+                    <div class="dropdown-menu bg-steel border-0">
+                      <a class="dropdown-item" href=""><span class="material-icons">logout</span></a>
+                    </div>
+                  </div>
+                {% else %}
+                  <a class="nav-item nav-link" href=""><span class="material-icons">login</span></a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div class="col-md-6">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+          </div>
+          <div class="col-sm-3"></div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+<footer class="text-center text-lg-start text-light bg-steel">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+
+    <!-- Right -->
+    <div>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            {% load static %}
+              <img src="{% static 'page/ubec-logo.svg' %}" alt="My image"> 
+          </h6>
+          <p>
+            {% load static %}
+              <img src="{% static 'page/ouvidoria.svg' %}" alt="My image"> 
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          
+          <p>
+            Infraestrutura
+          </p>
+          <p>
+            Estudante
+          </p>
+          <p>
+            Graduação
+          </p>
+          <br>
+          <p>
+            <b>Ajuda</b>
+          </p>
+          <p>
+            <b>Trabalhe Conosco</b>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <p>
+            Biblioteca
+          </p>
+          <p>
+            Imprensa
+          </p>
+          <p>
+            Pós-graduação
+          </p>
+          <br>
+          <p>
+            <b>Católica de A a Z</b>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <p>
+            (63) 3221.2100
+            <br>
+            faleconosco@catolica-to.edu.br
+          </p>
+          <p>
+            Unidade 1
+            <br>
+            ACSU - SE 140 Avenida Teotônio Segurado Quadra 1402, Lote 1 - Bairro: Plano Diretor Sul - CEP: 77024-710 - Palmas / TO
+          </p>
+          <p>
+            Unidade II
+            Rodovia TO-050, Loteamento Coqueirinho, Lote 7, Palmas / TO
+          </p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    Powered by <b>PMWCoders</b>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+      
+</body>
+</html>

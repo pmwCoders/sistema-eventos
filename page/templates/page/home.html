@@ -1,0 +1,21 @@
+{% extends "page/base.html" %}
+{% block content %}
+        <article class="media content-section w-100 p-3"> 
+                <div class="media-body text-center">
+                        <br>
+                        <h3>Registre sua presença na Semana Acadêmica 2022!</h3>
+                        <br>
+                        <br>
+                        {% load static %}
+                        <img src="{% static 'page/presenca.svg' %}" class="w-75 h-75" alt="My image"> 
+                        <br>
+                        <br>
+                        <br>
+                        <div class="form-group text-center">
+                                <button class="btn btn-outline-info" type="submit">Fazer login</button>
+                        </div>
+
+        
+                </div>     
+        </article>
+{% endblock content %}
